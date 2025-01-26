@@ -226,7 +226,7 @@ make -j8
 
 
 ```
-		<dependency>
+        <dependency>
             <groupId>net.java.dev.jna</groupId>
             <artifactId>jna</artifactId>
             <version>5.12.1</version>
@@ -327,7 +327,8 @@ public interface HivisionIDphotosLibrary extends Library {
 
     void human_mating(Hivision_config config);
 
-    int ID_photo(Hivision_config config,int out_size_kb,boolean layout_phot);}
+    int ID_photo(Hivision_config config,int out_size_kb,boolean layout_phot);
+}
 ```
 
 ## 5.编写Controller类
