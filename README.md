@@ -86,9 +86,10 @@ cd  HivisionIDPhotos_cpp
 
 在设置中找到 vcvars64.bat（适用于 VS 2017 的 x64 本机工具命令提示）并单击，打开 VS 编译 x64 架构程序的虚拟环境
 
-```
+```bash
 cd  HivisionIDPhotos_cpp
 mkdir build && cd build
+
 cmake .. -G Ninja  #命令行编译cmake .. -G Ninja    api编译 cmake .. -G Ninja -DCOMPILE_LIBRARY=ON
 ninja
 ```
@@ -103,15 +104,16 @@ ninja
 
 编译好的静态 opencv 文件和 mnn 文件放入 lib 文件夹下
 
-```
+```bash
 cd  HivisionIDPhotos_cpp
 mkdir build && cd build
+
 cmake .. \
--DCMAKE_SYSTEM_NAME=宿主系统，例如Linux \
--DCMAKE_SYSTEM_VERSION=1 \
--DCMAKE_SYSTEM_PROCESSOR=交叉编译目标处理器的信息。例如aarch64 \
--DCMAKE_C_COMPILER=交叉编译器中C编译器的路径 \
--DCMAKE_CXX_COMPILER=交叉编译器中C++编译器的路径
+    -DCMAKE_SYSTEM_NAME="宿主系统，例如Linux" \
+    -DCMAKE_SYSTEM_VERSION=1 \
+    -DCMAKE_SYSTEM_PROCESSOR="交叉编译目标处理器的信息。例如aarch64" \
+    -DCMAKE_C_COMPILER="交叉编译器中C编译器的路径" \
+    -DCMAKE_CXX_COMPILER="交叉编译器中C++编译器的路径"
 make -j8
 ```
 
@@ -122,11 +124,19 @@ make -j8
 
 编译好的静态 opencv 文件和 mnn 文件放入 lib 文件夹下
 
-```
+```bash
 cd  HivisionIDPhotos_cpp
 mkdir build && cd build
 
-cmake ..     -DCMAKE_TOOLCHAIN_FILE=#CMake工具链文件的路径     -DCMAKE_ANDROID_NDK=#Android NDK（Native Development Kit）的安装路径    -DANDROID_PLATFORM=android-21     -DANDROID_NATIVE_API_LEVEL=21     -DANDROID_ABI=arm64-v8a     -DANDROID_NATIVE_API_LEVEL=21 -DCOMPILE_LIBRARY=ON -DCOMPILE_ANDROID=ON
+cmake .. \
+    -DCMAKE_TOOLCHAIN_FILE="CMake工具链文件的路径" \
+    -DCMAKE_ANDROID_NDK="Android NDK（Native Development Kit）的安装路径" \
+    -DANDROID_PLATFORM=android-21 \
+    -DANDROID_NATIVE_API_LEVEL=21 \
+    -DANDROID_ABI=arm64-v8a \
+    -DANDROID_NATIVE_API_LEVEL=21 \
+    -DCOMPILE_LIBRARY=ON \
+    -DCOMPILE_ANDROID=ON
 
 make -j8
 ```
@@ -166,8 +176,6 @@ make -j8
 
 `./HivisionIDPhotos_cpp.exe -i demo/images/test.jpg  -o 1  -r 255  -g 0  -b 0 -h 413 -w 295 -l 1`
 
-<br>
-
 # API 使用
 
 利用 SpringBoot+JNA 调用 dll 文件生成 API（linux 环境调用 `.so` 文件）
@@ -175,7 +183,7 @@ make -j8
 
 ## 1.创建 SpringBoot 项目并在 pom.xml 中添加依赖
 
-```
+```xml
         <dependency>
             <groupId>net.java.dev.jna</groupId>
             <artifactId>jna</artifactId>
@@ -194,7 +202,7 @@ make -j8
 
 - `Hivision_config.java`
 
-```
+```java
 public class Hivision_config extends Structure implements Structure.ByValue {
     /** 人像抠图模型文件 */
     public String model_path;
@@ -243,7 +251,7 @@ public class Hivision_config extends Structure implements Structure.ByValue {
 
 - `Hivision_color.java`
 
-```
+```java
 public class Hivision_color extends Structure implements Structure.ByValue {
     public int r;
     public int g;
@@ -270,7 +278,7 @@ public class Hivision_color extends Structure implements Structure.ByValue {
 
 - `HivisionIDphotosLibrary.java`
 
-```
+```java
 public interface HivisionIDphotosLibrary extends Library {
     /** 动态库的名称：文件名去掉开头的 <code>lib</code> 和结尾的 <code>.so</code> 便是其库名称 */
     String NATIVE_LIBRARY_NAME = "HivisionIDphotos";
@@ -285,7 +293,7 @@ public interface HivisionIDphotosLibrary extends Library {
 
 - `JnaDemoController.java`
 
-```
+```java
 @RestController
 @RequestMapping("/JNA")
 public class JnaDemoController {
@@ -353,11 +361,8 @@ public class JnaDemoController {
     year = {2024},
     publisher = {GitHub}
 }
-
 ```
-
-<br>
 
 # 联系我们
 
-如果您有任何问题，请提[issue](https://github.com/zjkhahah/HivisionIDPhotos-cpp/issues)或发邮件至junkangzhou@stu.xidian.edu.cn
+如果您有任何问题，请提[issue](https://github.com/zjkhahah/HivisionIDPhotos-cpp/issues)或发邮件至 `junkangzhou@stu.xidian.edu.cn`
